@@ -6,7 +6,7 @@ from datetime import datetime
 from api.models.base import BaseModel
 
 # This
-def create_directory_path(self):
+def create_directory_path():
     now = datetime.now()
     current_year = now.year
     current_month = now.month
