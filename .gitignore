@@ -17,3 +17,5 @@ git-lfs
 local.py
 node_modules/
 dist/
+__pycache__
+uploaded_files

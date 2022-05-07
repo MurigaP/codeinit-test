@@ -1,4 +1,3 @@
-# from crum import get_current_user
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
