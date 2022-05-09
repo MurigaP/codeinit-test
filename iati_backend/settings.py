@@ -102,6 +102,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
+    "DEFAULT_PAGINATION_CLASS": "api.views.util.StandardResultsSetPagination",
 }
 APPEND_SLASH = False
 MEDIA_URL = "/media/"

@@ -1,6 +1,7 @@
 from django.db.models import QuerySet
 from functools import wraps
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 
 
 def paginate_results(func):
@@ -23,3 +24,9 @@ def paginate_results(func):
         return Response(serializer.data)
 
     return inner
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = "page_size"
+    max_page_size = 100000
