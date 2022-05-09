@@ -5,7 +5,13 @@ from datetime import datetime
 
 from api.models.base import BaseModel
 
-# This
+"""
+Function to create a hierachial folder structure of the documents
+Based on year and current month
+eg.  uploaded_files/2022/05
+"""
+
+
 def create_directory_path():
     now = datetime.now()
     current_year = now.year

@@ -1,14 +1,17 @@
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.exceptions import APIException
-
 from rest_framework import status
+from rest_framework.utils.serializer_helpers import ReturnDict, ReturnList
+from django.utils.encoding import force_str
+from django.utils.translation import gettext_lazy as _
 
 
 def error_response(exception, status=HTTP_400_BAD_REQUEST):
     return Response({"error": type(exception).__name__}, status=status)
 
 
+# Generic Exceptions for all api related errors
 class BaseError(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -45,23 +48,7 @@ class PermissionDeniedError(ServiceError):
 
 class FileUploadError(ServiceError):
     def __init__(self, msg=""):
-        message = "Error - Brand does not exist"
-        if msg:
-            message = msg
-        super().__init__(message)
-
-
-class FileAlreadyExistsError(ServiceError):
-    def __init__(self, msg=""):
-        message = "Error - Brand does not exist"
-        if msg:
-            message = msg
-        super().__init__(message)
-
-
-class FileDoesNotExistError(ServiceError):
-    def __init__(self, msg=""):
-        message = "Error - Brand does not exist"
+        message = "Error - An error ocurred while uploading the file"
         if msg:
             message = msg
         super().__init__(message)
@@ -69,7 +56,7 @@ class FileDoesNotExistError(ServiceError):
 
 class InvalidFileError(ServiceError):
     def __init__(self, msg=""):
-        message = "Error - Brand does not exist"
+        message = "Error - File uploaded is invalid"
         if msg:
             message = msg
         super().__init__(message)
@@ -77,16 +64,18 @@ class InvalidFileError(ServiceError):
 
 class NoFilesforUploadError(ServiceError):
     def __init__(self, msg=""):
-        message = "Error - Brand does not exist"
+        message = "Error - No file to upload"
         if msg:
             message = msg
         super().__init__(message)
 
 
-from rest_framework.utils.serializer_helpers import ReturnDict, ReturnList
-from django.utils.encoding import force_str
-
-from django.utils.translation import gettext_lazy as _
+class FileDoesNotExistError(ServiceError):
+    def __init__(self, msg=""):
+        message = "Error - No file found matching criteria"
+        if msg:
+            message = msg
+        super().__init__(message)
 
 
 def _get_error_details(data, default_code=None):
@@ -135,7 +124,7 @@ class SerializerError(APIException):
 
 class ErrorDetail(str):
     """
-    A string-like object that can additionally have a code.
+    Formatting errors to single response errors
     """
 
     code = None

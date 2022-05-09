@@ -5,14 +5,19 @@ from api.services.document import DocumentService
 from api.exceptions.base import ServiceError
 from rest_framework.permissions import IsAuthenticated
 from api.exceptions.base import error_response
+from api.serializers import DocumentSerializer
+from .util import paginate_results
 
 
-class DocumentViewSet(viewsets.ViewSet):
+class DocumentViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
+    serializer_class = DocumentSerializer
 
+    # Retrieving uploaded documents api
     def get_queryset(self):
         return []
 
+    # Document upload api endpoint
     @action(
         methods=["POST"],
         detail=False,
@@ -27,14 +32,10 @@ class DocumentViewSet(viewsets.ViewSet):
         except ServiceError as exception:
             return error_response(exception)
 
-    @action(methods=["GET"], detail=False, url_path="details", url_name="details")
-    def fetch_document_details(self, request):
+    # Retrieving user uploaded documents api
+    @paginate_results
+    @action(methods=["GET"], detail=False, url_path="documents", url_name="documents")
+    def list_documents(self, request):
         user_id = request.user.id
-        payload = request.query_params.dict()
-        service = DocumentService(
-            user_id=user_id, document_id=payload.get("document_id", None)
-        )
-        try:
-            return Response(service.get_document_details_info())
-        except ServiceError as exception:
-            return error_response(exception)
+        service = DocumentService(user_id=user_id)
+        return self.filter_queryset(service.list_documents())

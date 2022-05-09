@@ -9,6 +9,9 @@ class AutoDateTimeField(models.DateTimeField):
         return timezone.now()
 
 
+# Abstract models to capture generic user action field data
+
+
 class BaseModel(models.Model):
 
     created_at = models.DateTimeField(default=timezone.now, db_index=True)
@@ -40,7 +43,7 @@ class BaseModel(models.Model):
         user = get_current_user()
         if user and not user.pk:
             user = None
-        if not self.created_by and not self.pk:
+        if not self.created_by:
             self.created_by = user
         self.updated_by = user
         super().save(*args, **kwargs)

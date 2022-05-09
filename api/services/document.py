@@ -7,6 +7,13 @@ from api.exceptions.base import NoFilesforUploadError
 from api.services.user import UserService
 from api.models.core.document import Document
 import xml.etree.ElementTree as ET
+from django.db.models import Q
+
+"""
+Document Service to handle:
+1 . Document upload functionality and validation
+2.  Retrieving user uploaded documents
+"""
 
 
 class DocumentService:
@@ -43,3 +50,6 @@ class DocumentService:
         record = self.__get_document_info()
         response = DocumentSerializer(record, many=False).data
         return response
+
+    def list_documents(self):
+        return Document.objects.filter(Q(created_by_id=self._user_id))

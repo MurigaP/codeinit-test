@@ -9,6 +9,13 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+"""
+User Service to handle:
+1 . Retrieve user details
+2. Search user details
+"""
+
+
 class UserService:
     def __init__(self, user_id=None):
         self._logger = logging.getLogger("django")

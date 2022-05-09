@@ -30,7 +30,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 class UploadFileSerializer(serializers.Serializer):
     file = serializers.FileField()
-
+    # Function to validate file integrity & ensuring <iati-activities> is the root tag
     def validate_file(self, file):
         et = ET.parse(file)
         root = et.getroot()
