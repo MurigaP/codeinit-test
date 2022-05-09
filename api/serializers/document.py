@@ -2,7 +2,11 @@ from rest_framework import serializers
 from api.serializers import UserSerializer
 from api.models import Document
 import xml.etree.ElementTree as ET
-from api.exceptions.base import InvalidFileError, FileUploadError
+from api.exceptions.base import (
+    InvalidFileError,
+    FileUploadError,
+    UnsupportedFileFormatError,
+)
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -22,18 +26,19 @@ class DocumentSerializer(serializers.ModelSerializer):
     def get_file_path(self, obj):
         request = self.context.get("request")
         file = obj.file.url
-        # full_url = settings.DOMAIN + file
-        full_url = ""
-        # return request.build_absolute_uri(file)
-        return full_url
+        return request.build_absolute_uri(file)
 
 
 class UploadFileSerializer(serializers.Serializer):
     file = serializers.FileField()
     # Function to validate file integrity & ensuring <iati-activities> is the root tag
     def validate_file(self, file):
-        et = ET.parse(file)
-        root = et.getroot()
+        try:
+            et = ET.parse(file)
+            root = et.getroot()
+        except Exception as e:
+            raise UnsupportedFileFormatError()
+
         allowable_tag = "iati-activities"
         if root.tag != allowable_tag:
             raise InvalidFileError()

@@ -62,6 +62,14 @@ class InvalidFileError(ServiceError):
         super().__init__(message)
 
 
+class UnsupportedFileFormatError(ServiceError):
+    def __init__(self, msg=""):
+        message = "Error - File uploaded is unsupported"
+        if msg:
+            message = msg
+        super().__init__(message)
+
+
 class NoFilesforUploadError(ServiceError):
     def __init__(self, msg=""):
         message = "Error - No file to upload"
