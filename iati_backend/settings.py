@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
     "drf_yasg",
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -108,3 +110,4 @@ APPEND_SLASH = False
 MEDIA_URL = "/media/"
 # Root folder to the document upload
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded_files/")
+CORS_ORIGIN_ALLOW_ALL = True

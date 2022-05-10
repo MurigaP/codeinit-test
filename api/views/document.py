@@ -3,14 +3,14 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from api.services.document import DocumentService
 from api.exceptions.base import ServiceError
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from api.exceptions.base import error_response
 from api.serializers import DocumentSerializer
 from .util import paginate_results
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
     serializer_class = DocumentSerializer
 
     # Retrieving uploaded documents api

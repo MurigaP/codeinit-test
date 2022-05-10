@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentApiUrl } from './api';
+import { DocumentApiUrl, DocumentUploadApiUrl } from './api';
 export interface Documents {
   id: string;
   original_file_name: string;
@@ -32,9 +32,21 @@ export class AppComponent implements OnInit {
     this.apiService.getRecord(DocumentApiUrl, payload).then((data: any) => {
       if (data) {
         this.documents = data.results;
+        console.log("  this.documents", this.documents)
       }
 
     });
   }
+
+  // Document Upload Api Call function
+  postDocuments(payload: {}) {
+    this.apiService.postRecord(DocumentUploadApiUrl, payload).then((data: any) => {
+      if (data) {
+        this.documents = data.results;
+      }
+
+    });
+  }
+
 
 }

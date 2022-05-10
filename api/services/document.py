@@ -52,6 +52,7 @@ class DocumentService:
         return response
 
     def list_documents(self):
-        return Document.objects.filter(Q(created_by_id=self._user_id)).order_by(
-            "-created_at"
-        )
+        filter_params = {}
+        if self._user_id:
+            filter_params.update({"created_by_id": self._user_id})
+        return Document.objects.filter(Q(**filter_params)).order_by("-created_at")
