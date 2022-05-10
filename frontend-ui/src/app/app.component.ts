@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentApiUrl, DocumentUploadApiUrl } from './api';
+import { DocumentApiUrl, DocumentUploadApiUrl, default_page, default_page_size } from './api';
 export interface Documents {
   id: string;
   original_file_name: string;
@@ -27,6 +27,9 @@ export class AppComponent implements OnInit {
   documents: Documents[] = [];
   isUploadSectionCollapsed = true;
   fileData: File | any = null;
+  page = default_page;
+  pageSize = default_page_size;
+  collectionSize: any;
 
 
   constructor(public apiService: ApiService, private formBuilder: FormBuilder, public notificationService: NotificationService) {
@@ -39,16 +42,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.listDocuments();
+    this.listDocuments(1);
 
   }
   // Fetching all uploaded documents
-  listDocuments() {
-    const payload = {}
-    this.apiService.getRecord(DocumentApiUrl, payload).then((data: any) => {
-      if (data) {
-        this.documents = data.results;
-        console.log("  this.documents", this.documents)
+  listDocuments(newPage: number) {
+    const params = {
+      'page': newPage
+    };
+    this.documents = [];
+    this.apiService.getRecord(DocumentApiUrl, params).then((response: any) => {
+      if (response) {
+        this.documents = response.results;
+        this.collectionSize = response['count']
       }
 
     });
@@ -64,9 +70,11 @@ export class AppComponent implements OnInit {
         let message = "Document upload was successful. Document id :" + uploadedDocumentId
         this.notificationService.showSweetAlert("Success", message, "success")
         // on success refresh the data async
-        this.listDocuments();
+        this.listDocuments(1);
         // Reset the form 
         this.FileUploadForm.reset();
+        // collapsing the upload option view 
+        this.isUploadSectionCollapsed = true;
 
 
 

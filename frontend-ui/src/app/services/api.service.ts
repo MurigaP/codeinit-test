@@ -8,8 +8,11 @@ export class ApiService {
   constructor(private http: HttpClient) { }
   // Generic Http Get method function for all api calls
   getRecord(endpointurl: any, params: any) {
+    const options = {
+      params: params
+    };
     return new Promise((resolve, reject) => {
-      return this.http.get<[]>(endpointurl, params).subscribe((res) => {
+      return this.http.get<[]>(endpointurl, options).subscribe((res) => {
         resolve(res);
       }, err => {
 
