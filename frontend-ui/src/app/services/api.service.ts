@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+
+  constructor(private http: HttpClient) { }
+  // Generic Http Get method function for all api calls
+  getRecord(endpointurl: any, params: {}) {
+    return new Promise((resolve, reject) => {
+      const options = {
+        params: params
+      };
+      return this.http.get<[]>(endpointurl, options).subscribe((res) => {
+        resolve(res);
+      }, err => {
+
+        reject(err);
+      });
+
+    });
+
+  }
+  // Generic Http Post method function for all api calls
+  postRecord(endpointurl: any, params: {}) {
+    return new Promise((resolve, reject) => {
+      const options = {
+        params: params
+      };
+      return this.http.post<[]>(endpointurl, options).subscribe((res) => {
+        resolve(res);
+      }, err => {
+
+        reject(err);
+      });
+
+    });
+
+  }
+}
