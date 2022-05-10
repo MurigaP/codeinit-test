@@ -7,12 +7,9 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
   // Generic Http Get method function for all api calls
-  getRecord(endpointurl: any, params: {}) {
+  getRecord(endpointurl: any, params: any) {
     return new Promise((resolve, reject) => {
-      const options = {
-        params: params
-      };
-      return this.http.get<[]>(endpointurl, options).subscribe((res) => {
+      return this.http.get<[]>(endpointurl, params).subscribe((res) => {
         resolve(res);
       }, err => {
 
@@ -23,12 +20,9 @@ export class ApiService {
 
   }
   // Generic Http Post method function for all api calls
-  postRecord(endpointurl: any, params: {}) {
+  postRecord(endpointurl: any, params: any) {
     return new Promise((resolve, reject) => {
-      const options = {
-        params: params
-      };
-      return this.http.post<[]>(endpointurl, options).subscribe((res) => {
+      return this.http.post<[]>(endpointurl, params).subscribe((res) => {
         resolve(res);
       }, err => {
 
