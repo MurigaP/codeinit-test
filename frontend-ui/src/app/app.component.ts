@@ -65,6 +65,8 @@ export class AppComponent implements OnInit {
         this.notificationService.showSweetAlert("Success", message, "success")
         // on success refresh the data async
         this.listDocuments();
+        // Reset the form 
+        this.FileUploadForm.reset();
 
 
 
