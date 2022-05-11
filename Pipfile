@@ -15,6 +15,7 @@ drf-yasg = "*"
 django-crum = "*"
 djangorestframework-xml = "*"
 whitenoise = "*"
+"backports.zoneinfo" = "*"
 
 [dev-packages]
 
