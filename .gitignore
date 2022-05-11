@@ -9,7 +9,6 @@ media/
 .env_staging
 .envrc
 envrc
-db.sqlite3
 django.log
 .envrc
 git-lfs
