@@ -7,7 +7,7 @@ import os
 
 SECRET_KEY = "django-insecure-38*-=_s2(qv!k=_f7ptvoajk*47yuy_esc%al8#*ymsf6_y&08"
 DEBUG = True
-# DEBUG = False
+DEBUG = False
 
 
 def get_set_environment_config(environment_name, default_value=None):
