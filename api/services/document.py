@@ -28,8 +28,8 @@ class DocumentService:
         payload = request.data
         if not payload:
             raise NoFilesforUploadError()
-        user_service = UserService(user_id=self._user_id)
-        user_record = user_service.get_user_details()
+        # user_service = UserService(user_id=self._user_id)
+        # user_record = user_service.get_user_details()
         serializer = UploadFileSerializer(data=payload, many=False)
         if not serializer.is_valid():
             raise SerializerError(serializer.errors)
